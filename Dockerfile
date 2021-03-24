@@ -82,6 +82,11 @@ RUN mkdir -p ${GOPATH}/src/github.com/golang/protobuf && \
     go build -ldflags '-w -s' -o /golang-protobuf-out/protoc-gen-go ./protoc-gen-go && \
     install -Ds /golang-protobuf-out/protoc-gen-go /out/usr/bin/protoc-gen-go
 
+RUN git clone --recursive --depth=1 https://github.com/nats-rpc/nrpc.git ${GOPATH}/src/github.com/nats-rpc/nrpc && \
+    cd ${GOPATH}/src/github.com/nats-rpc/nrpc && \
+    go build -ldflags '-w -s' -o /golang-protobuf-out/protoc-gen-nrpc ./protoc-gen-nrpc && \
+    install -Ds /golang-protobuf-out/protoc-gen-nrpc /out/usr/bin/protoc-gen-nrpc
+
 ARG PROTOC_GEN_GOGO_VERSION
 RUN mkdir -p ${GOPATH}/src/github.com/gogo/protobuf && \
     curl -sSL https://api.github.com/repos/gogo/protobuf/tarball/${PROTOC_GEN_GOGO_VERSION} | tar xz --strip 1 -C ${GOPATH}/src/github.com/gogo/protobuf &&\
